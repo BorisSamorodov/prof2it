@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="ua">
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+   <div>
+
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <table>
+                <tr>
+                    <td>Вітаємо, @User.Identity.Name</td>
+                    <td>@Html.ActionLink("Вийти", "Logout", "Home")</td>
+                </tr>
+                
+                <tr>
+                    <td>@Html.ActionLink("Наукові видання", "getAll", "Journal" )</td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            @if (!Context.Request.Host.Host.Equals("localhost") )
+            {
+                <script async src="https://telegram.org/js/telegram-widget.js?22"
+                        data-telegram-login="KBIITMM_bot" data-size="large" data-radius="20"
+                        data-auth-url="/home/login" data-request-access="write">
+                </script>
+            }
+            else
+            {
+                <div>Це локальна розробка, віджету тут не може бути</div>
+            }
+        }
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+
+</body>
+</html>

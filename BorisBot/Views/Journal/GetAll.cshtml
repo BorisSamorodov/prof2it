@@ -1,0 +1,48 @@
+﻿@model BorisBot.Models.JournalManageModel
+
+@{
+    ViewBag.Title = "Наукові видання";
+    Layout = "_Layout";
+}
+
+<h2>Наукові видання</h2>
+
+@if ( Model.Existing.Any() )
+{
+    <table>
+        <tr>
+            <td>Назва</td>
+            <td>Випуски</td>
+        </tr>
+
+        @foreach (var m in Model.Existing)
+        {
+            <tr>
+                <td>@m.Name</td>
+                <td>@m.IssuesCount</td>
+                <td>
+                    @using (Html.BeginForm("update", "Journal", new { id = m.Id}))
+                    {
+                        @Html.EditorFor( e => e.NewJournalName)
+                        <button type="submit">Змінити назву</button>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Видалити", "delete", "Journal", routeValues: new { id = m.Id})
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div>Ще не додано жодного випуску</div>
+}
+
+
+@using (Html.BeginForm("create", "Journal")) 
+{
+    <p>Назва нового журналу</p>
+    @Html.EditorFor( m => m.NewJournalName)
+    <button type="submit">Створити</button>
+}
