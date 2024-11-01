@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Telegram.Bot.Types;
 
 namespace BorisBot.Controllers;
 
@@ -9,10 +10,12 @@ namespace BorisBot.Controllers;
 public class HomeController : Controller
 {
     private readonly IHomeService _service;
+    private readonly ITelegramService _telegramService;
 
-    public HomeController(IHomeService service)
+    public HomeController(IHomeService service, ITelegramService telegramService)
     {
         _service = service;
+        _telegramService = telegramService;
     }
 
     [HttpGet("")]
@@ -27,6 +30,14 @@ public class HomeController : Controller
         return View();
     }
 
+
+    [HttpPost("webhook")]
+    public async Task<IActionResult> TelegramWebHook(Update update)
+    {
+        await _telegramService.Process(update);
+        return Ok();
+    }
+    
     [HttpGet("login")]
     public async Task<IActionResult> Login(
         string id,
