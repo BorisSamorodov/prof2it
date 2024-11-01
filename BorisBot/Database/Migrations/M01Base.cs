@@ -9,76 +9,76 @@ public class M01Base : Migration
 {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.CreateTable("authors", cb => new
+        migrationBuilder.CreateTable("Authors", cb => new
             {
-                id = cb.Column<long>(),
-                userName = cb.Column<string>(),
-                realName = cb.Column<string>()
+                Id = cb.Column<long>(),
+                UserName = cb.Column<string>(),
+                RealName = cb.Column<string>()
             },
             constraints: ctb =>
             {
-                ctb.PrimaryKey("PK_authors", x => x.id);
+                ctb.PrimaryKey("PK_authors", x => x.Id);
             });
 
-        migrationBuilder.CreateTable("scientificJournals", cb => new
+        migrationBuilder.CreateTable("ScientificJournals", cb => new
             {
-                id = cb.Column<Guid>(),
-                name = cb.Column<string>()
+                Id = cb.Column<Guid>(),
+                Name = cb.Column<string>()
             },
             constraints: ctb =>
             {
-                ctb.PrimaryKey("PK_scientificJournals", x => x.id);
+                ctb.PrimaryKey("PK_scientificJournals", x => x.Id);
             });
         
-        migrationBuilder.CreateTable("journalIssues", cb => new
+        migrationBuilder.CreateTable("JournalIssues", cb => new
             {
-                id = cb.Column<Guid>(),
-                scientificJournalId = cb.Column<Guid>(),
-                date = cb.Column<DateTime>()
+                Id = cb.Column<Guid>(),
+                ScientificJournalId = cb.Column<Guid>(),
+                Date = cb.Column<DateTime>()
             },
             constraints: ctb =>
             {
-                ctb.PrimaryKey("PK_journalIssues", x => x.id);
-                ctb.ForeignKey("FK_journalIssues_scientificJournals", x => x.scientificJournalId, "scientificJournals", "id");
+                ctb.PrimaryKey("PK_journalIssues", x => x.Id);
+                ctb.ForeignKey("FK_journalIssues_scientificJournals", x => x.ScientificJournalId, "ScientificJournals", "Id");
             });
         
-        migrationBuilder.CreateTable("articles", cb => new
+        migrationBuilder.CreateTable("Articles", cb => new
             {
-                id = cb.Column<Guid>(),
-                journalIssueId = cb.Column<Guid>(),
-                title = cb.Column<string>(),
-                contents = cb.Column<byte[]>()
+                Id = cb.Column<Guid>(),
+                JournalIssueId = cb.Column<Guid>(),
+                Title = cb.Column<string>(),
+                Contents = cb.Column<byte[]>()
             },
             constraints: ctb =>
             {
-                ctb.PrimaryKey("PK_articles", x => x.id);
-                ctb.ForeignKey("FK_articles_journalIssues", x => x.journalIssueId, "journalIssues", "id");
+                ctb.PrimaryKey("PK_articles", x => x.Id);
+                ctb.ForeignKey("FK_articles_journalIssues", x => x.JournalIssueId, "JournalIssues", "Id");
             });
         
-        migrationBuilder.CreateTable("articleAuthors", cb => new
+        migrationBuilder.CreateTable("ArticleAuthors", cb => new
             {
-                id = cb.Column<Guid>(),
-                articleId = cb.Column<Guid>(),
-                authorId = cb.Column<long>(),
+                Id = cb.Column<Guid>(),
+                ArticleId = cb.Column<Guid>(),
+                AuthorId = cb.Column<long>(),
             },
             constraints: ctb =>
             {
-                ctb.PrimaryKey("PK_articleAuthors", x => x.id);
-                ctb.ForeignKey("FK_articleAuthors_articles", x => x.articleId, "articles", "id");
-                ctb.ForeignKey("FK_articleAuthors_authors", x => x.authorId, "authors", "id");
+                ctb.PrimaryKey("PK_articleAuthors", x => x.Id);
+                ctb.ForeignKey("FK_articleAuthors_articles", x => x.ArticleId, "Articles", "Id");
+                ctb.ForeignKey("FK_articleAuthors_authors", x => x.AuthorId, "Authors", "Id");
             });
         
-        migrationBuilder.CreateTable("editors", cb => new
+        migrationBuilder.CreateTable("Editors", cb => new
             {
-                id = cb.Column<Guid>(),
-                authorId = cb.Column<long>(),
-                scientificJournalId = cb.Column<Guid>()
+                Id = cb.Column<Guid>(),
+                AuthorId = cb.Column<long>(),
+                ScientificJournalId = cb.Column<Guid>()
             },
             constraints: ctb =>
             {
-                ctb.PrimaryKey("PK_editors", x => x.id);
-                ctb.ForeignKey("FK_editors_authors", x => x.authorId, "authors", "id");
-                ctb.ForeignKey("FK_editors_scientificJournals", x => x.scientificJournalId, "scientificJournals", "id");
+                ctb.PrimaryKey("PK_editors", x => x.Id);
+                ctb.ForeignKey("FK_editors_authors", x => x.AuthorId, "Authors", "Id");
+                ctb.ForeignKey("FK_editors_scientificJournals", x => x.ScientificJournalId, "ScientificJournals", "Id");
             });
         }
 }
